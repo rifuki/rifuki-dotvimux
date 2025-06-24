@@ -1,0 +1,18 @@
+# Ignore everything
+*
+
+# But not these files
+!.gitignore
+
+# But not folders themselves, so we can whitelist
+!*/
+
+# But not nvim and its contents
+!nvim/
+!nvim/**
+
+# But not tmux and its contents
+!tmux/
+!tmux/**
+# Ignore tmux/plugins and its contents
+tmux/plugins/
