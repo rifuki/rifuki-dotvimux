@@ -36,6 +36,7 @@ vim.schedule(function()
     require("mappings")
 end)
 
+--> Below are some custom options and settings <--
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
@@ -43,22 +44,23 @@ vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
 vim.opt.foldenable = true
 
+-- Set commentstring for different file types
 vim.cmd([[autocmd FileType javascriptreact,typescriptreact,html setlocal commentstring={/*\ %s\ */}]])
 
---
--- -- Menonaktifkan Noice sementara saat menyimpan file
--- vim.api.nvim_create_autocmd("BufWritePost", {
---   callback = function()
---     -- Menonaktifkan Noice
---     require("noice").disable()
---
---     -- Mengaktifkan kembali Noice setelah delay (1 detik)
---     vim.defer_fn(function()
---       require("noice").enable()
---     end, 1000)  -- Waktu tunggu dalam milidetik (1000 ms = 1 detik)
---   end,
--- })
+-- Temporarily disableNoice when writing files
+vim.api.nvim_create_autocmd("BufWritePost", {
+    callback = function()
+        -- Non-blocking call to disable Noice
+        require("noice").disable()
 
+        -- Re-enable Noice after a short delay
+        vim.defer_fn(function()
+            require("noice").enable()
+        end, 1000) -- Adjust the delay as needed
+    end,
+})
+
+-- Set up auto formatting for specific file types
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "gitcommit",
     callback = function()
@@ -66,6 +68,23 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.opt_local.spell = true
         vim.opt_local.textwidth = 72
         vim.opt_local.colorcolumn = "51,73"
-        vim.opt_local.formatoptions:append("t") -- auto wrap saat nulis
+        vim.opt_local.formatoptions:append("t") -- auto wrap text on typing
     end,
 })
+
+-- Set up clipboard for WSL
+local is_wsl = vim.fn.has("wsl") == 1
+if is_wsl then
+    vim.g.clipboard = {
+        name = "win32yank-wsl",
+        copy = {
+            ["+"] = "win32yank.exe -i --crlf",
+            ["*"] = "win32yank.exe -i --crlf",
+        },
+        paste = {
+            ["+"] = "win32yank.exe -o --lf",
+            ["*"] = "win32yank.exe -o --lf",
+        },
+        cache_enabled = 0,
+    }
+end
