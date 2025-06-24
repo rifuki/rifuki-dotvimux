@@ -6,7 +6,6 @@
 local M = {}
 
 M.base46 = {
-    theme = "bearded-arc",
     transparency = true,
 
     -- hl_override = {

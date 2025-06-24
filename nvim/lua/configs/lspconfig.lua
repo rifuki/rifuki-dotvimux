@@ -3,7 +3,6 @@ require("nvchad.configs.lspconfig").defaults()
 
 local lspconfig = require("lspconfig")
 
--- EXAMPLE
 local servers = { "lua_ls", "taplo", "prismals", "dockerls" }
 local nvlsp = require("nvchad.configs.lspconfig")
 
@@ -15,16 +14,6 @@ for _, lsp in ipairs(servers) do
         capabilities = nvlsp.capabilities,
     })
 end
-
--- configuring single server, example: typescript
--- lspconfig.ts_ls.setup {
---   on_attach = nvlsp.on_attach,
---   on_init = nvlsp.on_init,
---   capabilities = nvlsp.capabilities,
--- }
---
--- YAML dengan schema docker-compose (autocompletion di docker-compose.yml)
---
 
 lspconfig.gh_actions_ls.setup({
     on_attach = nvlsp.on_attach,
@@ -56,10 +45,11 @@ lspconfig.yamlls.setup({
         },
     },
 })
+
 -- TypeScript/JavaScript
 lspconfig.ts_ls.setup({
     on_attach = function(client, bufnr)
-        -- Mencegah `tsserver` menangani fitur HTML di TSX
+        -- Disable formatting for ts_ls to avoid handle TSX
         client.server_capabilities.documentFormattingProvider = false
         client.server_capabilities.documentRangeFormattingProvider = false
         nvlsp.on_attach(client, bufnr)
@@ -81,7 +71,7 @@ lspconfig.html.setup({
 -- CSS/TSX (vscode-css-language-server via bun)
 lspconfig.cssls.setup({
     cmd = { vim.fn.expand("~/.bun/bin/vscode-css-language-server"), "--stdio" },
-    filetypes = { "css", "typescriptreact", "javascriptreact" }, -- Tambahkan ini!
+    filetypes = { "css", "typescriptreact", "javascriptreact" },
     on_attach = nvlsp.on_attach,
     on_init = nvlsp.on_init,
     capabilities = nvlsp.capabilities,
