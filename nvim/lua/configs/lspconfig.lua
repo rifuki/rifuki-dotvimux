@@ -15,14 +15,23 @@ for _, lsp in ipairs(servers) do
     })
 end
 
+-- Autocmd: Set filetype yaml.github-actions untuk workflow
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+    pattern = { ".github/workflows/*.yml", ".github/workflows/*.yaml" },
+    callback = function()
+        vim.bo.filetype = "yaml.github-actions"
+    end,
+})
+
+-- LSP for workflow GitHub Actions
 lspconfig.gh_actions_ls.setup({
     on_attach = nvlsp.on_attach,
     on_init = nvlsp.on_init,
     capabilities = nvlsp.capabilities,
-    filetypes = { "yaml" },
+    filetypes = { "yaml.github-actions" },
     settings = {
         diagnostics = {
-            enable = false,
+            enable = true,
         },
     },
     root_dir = function(fname)
