@@ -47,18 +47,18 @@ vim.opt.foldenable = true
 -- Set commentstring for different file types
 vim.cmd([[autocmd FileType javascriptreact,typescriptreact,html setlocal commentstring={/*\ %s\ */}]])
 
--- Temporarily disableNoice when writing files
-vim.api.nvim_create_autocmd("BufWritePost", {
-    callback = function()
-        -- Non-blocking call to disable Noice
-        require("noice").disable()
-
-        -- Re-enable Noice after a short delay
-        vim.defer_fn(function()
-            require("noice").enable()
-        end, 1000) -- Adjust the delay as needed
-    end,
-})
+-- -- Temporarily disableNoice when writing files
+-- vim.api.nvim_create_autocmd("BufWritePost", {
+--     callback = function()
+--         -- Non-blocking call to disable Noice
+--         require("noice").disable()
+--
+--         -- Re-enable Noice after a short delay
+--         vim.defer_fn(function()
+--             require("noice").enable()
+--         end, 1000) -- Adjust the delay as needed
+--     end,
+-- })
 
 -- Set up auto formatting for specific file types
 vim.api.nvim_create_autocmd("FileType", {
