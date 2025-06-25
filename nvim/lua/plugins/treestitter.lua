@@ -18,6 +18,8 @@ return {
             "typescript",
             "tsx",
             "rust",
+            "markdown",
+            "markdown_inline",
         },
         highlight = {
             enable = true,
