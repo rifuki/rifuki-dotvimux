@@ -20,6 +20,7 @@ return {
             "rust",
             "markdown",
             "markdown_inline",
+            "caddy"
         },
         highlight = {
             enable = true,

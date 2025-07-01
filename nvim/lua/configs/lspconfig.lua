@@ -3,7 +3,7 @@ require("nvchad.configs.lspconfig").defaults()
 
 local lspconfig = require("lspconfig")
 
-local servers = { "lua_ls", "taplo", "dockerls" }
+local servers = { "lua_ls", "taplo", "dockerls", "bashls" }
 local nvlsp = require("nvchad.configs.lspconfig")
 
 -- lsps with default config
