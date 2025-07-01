@@ -3,7 +3,7 @@ require("nvchad.configs.lspconfig").defaults()
 
 local lspconfig = require("lspconfig")
 
-local servers = { "lua_ls", "taplo", "prismals", "dockerls" }
+local servers = { "lua_ls", "taplo", "dockerls", "bashls" }
 local nvlsp = require("nvchad.configs.lspconfig")
 
 -- lsps with default config
@@ -39,6 +39,7 @@ lspconfig.gh_actions_ls.setup({
     end,
 })
 
+-- YAML LSP
 lspconfig.yamlls.setup({
     on_attach = nvlsp.on_attach,
     on_init = nvlsp.on_init,
@@ -55,6 +56,23 @@ lspconfig.yamlls.setup({
     },
 })
 
+-- Deno LSP
+lspconfig.denols.setup({
+    on_attach = nvlsp.on_attach,
+    on_init = nvlsp.on_init,
+    capabilities = nvlsp.capabilities,
+    root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+    single_file_support = false,
+})
+
+-- Prisma LSP
+lspconfig.prismals.setup({
+    on_attach = nvlsp.on_attach,
+    on_init = nvlsp.on_init,
+    capabilities = nvlsp.capabilities,
+    root_dir = lspconfig.util.root_pattern("schema.prisma"),
+})
+
 -- TypeScript/JavaScript
 lspconfig.ts_ls.setup({
     on_attach = function(client, bufnr)
@@ -66,6 +84,7 @@ lspconfig.ts_ls.setup({
     on_init = nvlsp.on_init,
     capabilities = nvlsp.capabilities,
     root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json"),
+    single_file_support = false,
 })
 
 -- HTML/TSX (vscode-html-language-server via bun)

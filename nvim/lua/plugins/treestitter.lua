@@ -18,6 +18,9 @@ return {
             "typescript",
             "tsx",
             "rust",
+            "markdown",
+            "markdown_inline",
+            "caddy"
         },
         highlight = {
             enable = true,

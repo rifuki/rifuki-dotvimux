@@ -6,6 +6,7 @@
 
 # But not folders themselves, so we can whitelist
 !*/
+!setup.sh
 
 # But not nvim and its contents
 !nvim/
