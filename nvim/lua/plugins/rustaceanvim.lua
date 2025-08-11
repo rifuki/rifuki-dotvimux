@@ -9,11 +9,20 @@ return {
             -- LSP configuration
             server = {
                 on_attach = function(client, bufnr)
-                    vim.lsp.inlay_hint.enable(true)
+                    vim.lsp.inlay_hint.enable(false)
                 end,
                 default_settings = {
                     -- rust-analyzer language server configuration
-                    ["rust-analyzer"] = {},
+                    ["rust-analyzer"] = {
+                        inlayHints = {
+                            bindingModeHints = { enable = true },
+                            chainingHints = { enable = true },
+                            closingBraceHints = { enable = true, minLines = 25 },
+                            lifetimeElisionHints = { enable = true, useParameterNames = true },
+                            parameterHints = { enable = true },
+                            typeHints = { enable = true },
+                        },
+                    },
                 },
             },
             -- DAP configuration
